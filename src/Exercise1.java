@@ -83,13 +83,35 @@ public class Exercise1 {
             soCot = sc.nextInt();
         }
         PhanSo[][] martrix = new PhanSo[soHang][soCot];
+        PhanSo sum = new PhanSo(0,1);
         //Nhập số vào ma trận xác suất
         while (true) {
             for (int i = 0; i < soHang; i++) {
                 for (int j = 0; j < soCot; j++) {
-
+                    System.out.printf("Mời nhập phần tử a[%d][%d]: ", i,j);
+                    String inputString = sc.next(); // Nhập vào bàn phím dạng String (1/4,1/5...)
+                    PhanSo phanSo = StringToFraction(inputString); // Đổi String sang dạng phân số
+                    if(phanSo.tuSo < 0 || phanSo.mauSo <= 0 || phanSo.tuSo / phanSo.mauSo > 1)
+                    {
+                        j--;
+                        System.out.println("Xác suất không được âm và lớn hơn 1. Mời nhập lại!");
+                    }
+                    else
+                    {
+                        martrix[i][j] = phanSo;
+                        sum = sum.congHaiPS(phanSo); //Cộng tổng các xác suất đã nhập vào
+                    }
                 }
             }
+            //Kiem tra phân số sum nếu không bằng 1 thì ma trận sai, vì tổng ma trận xác xuất phải băng 1
+            if(sum.tuSo != sum.mauSo)
+            {
+                System.out.println("Ma trận chưa đúng. Mời nhập lại");
+                int i =0, j=0;
+                sum = new PhanSo(0,1);
+                continue;
+            }
+
         }
     }
 
