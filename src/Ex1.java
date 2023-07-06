@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Ex1 {
     public static double log2(double digit) {
         return Math.log(digit) / Math.log(2);
@@ -81,23 +83,112 @@ public class Ex1 {
         return H_YGivenX;
     }
 
-    public static double calculateY_Given_X2(double[][] matrix){
+    public static double calculateY_Given_X2(double[][] matrix) {
         return calculateHY(matrix) - calculateHX(matrix) + calculateX_Given_Y(matrix);
+        //H(Y|X) = H(Y) - H(X) + H(X|Y)
+    }
+
+    public static double calculateJointEntroPy(double[][] matrix) {
+        int rows = matrix.length;
+        int col = matrix[0].length;
+        double jointEntropy = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < col; j++) {
+                if (matrix[i][j] > 0) {
+                    jointEntropy += matrix[i][j] * log2(matrix[i][j]);
+                }
+            }
+        }
+        return jointEntropy * -1;
+    }
+
+    public static double calculateHY_Minus_HYGivienX(double[][] matrix) {
+        return calculateHY(matrix) - calculateY_Given_X(matrix);
+    }
+
+    public static double calculateMutualInformation(double[][] matrix) {
+        //I(X,Y) = H(Y) - H(Y|X) = H(X) - H(X|Y)
+//        return calculateHY(matrix) - calculateY_Given_X(matrix); --> 2cách
+        return calculateHX(matrix) - calculateX_Given_Y(matrix);
+    }
+
+    //Câu C
+
+    public static double calculateD_PX_PY(double[][] matrix) {
+        int rows = matrix.length;
+        int col = matrix[0].length;
+        double relativeEntropyDXY = 0;
+//        D(Px/Py) = Px * Log2(Px/Py)
+        for (int i = 0; i < rows; i++) {
+            double rowSum = 0;
+            double colSum = 0;
+            for (int j = 0; j < col; j++) {
+                rowSum += matrix[i][j]; // Tính P(Y)
+                colSum += matrix[j][i]; // Tính P(X)
+            }
+            relativeEntropyDXY += colSum * log2(colSum / rowSum);
+        }
+        return relativeEntropyDXY;
+    }
+
+    public static double calculateD_PY_PX(double[][] matrix) {
+        int rows = matrix.length;
+        int col = matrix[0].length;
+        double relativeEntropyDYX = 0;
+//        D(Py/Px) = Py * Log2(Py/Px)
+        for (int i = 0; i < rows; i++) {
+            double rowSum = 0;
+            double colSum = 0;
+            for (int j = 0; j < col; j++) {
+                rowSum += matrix[i][j]; // Tính P(Y)
+                colSum += matrix[j][i]; // Tính P(X)
+            }
+            relativeEntropyDYX += rowSum * log2(rowSum / colSum);
+        }
+        return relativeEntropyDYX;
     }
 
 
     public static void main(String[] args) {
-        double[][] matrix_test = {
-                {0.0625, 0.375, 0.0625},
-                {0.0625, 0.1875, 0},
-                {0, 0.1875, 0.0625}
-        };
-        System.out.println("HX: " + calculateHX(matrix_test));
-        System.out.println("HY: " + calculateHY(matrix_test));
-        System.out.println("H(X|Y): " + calculateX_Given_Y(matrix_test));
-        System.out.println("H(Y|X): " + calculateY_Given_X(matrix_test));
-        System.out.println("H(Y|X) another: " + calculateY_Given_X2(matrix_test));
+//        double[][] matrix = {
+//                {0.0625, 0.375, 0.0625},
+//                {0.0625, 0.1875, 0},
+//                {0, 0.1875, 0.0625}
+//        };
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Nhập kích thước ma trận
+        System.out.print("Nhập số hàng M: ");
+        int M = scanner.nextInt();
+        System.out.print("Nhập số cột N: ");
+        int N = scanner.nextInt();
+        // Tạo ma trận xác suất
+        double[][] matrix = new double[M][N];
+        // Nhập ma trận xác suất từ bàn phím
+
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
+                double probability = scanner.nextDouble();
+                while (probability < 0) {
+                    System.out.println("Xác suất không thể âm. Mời nhập lại!");
+                    System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
+                    probability = scanner.nextDouble();
+                }
+                matrix[i][j] = probability;
+            }
+        }
+
+        System.out.println("H(X): " + calculateHX(matrix));
+        System.out.println("H(Y): " + calculateHY(matrix));
+        System.out.println("H(X|Y): " + calculateX_Given_Y(matrix));
+        System.out.println("H(Y|X): " + calculateY_Given_X(matrix));
+        System.out.println("H(Y|X) another: " + calculateY_Given_X2(matrix));
+        System.out.println("H(X,Y): " + calculateJointEntroPy(matrix));
+        System.out.println("H(Y) - H(Y|X): " + calculateHY_Minus_HYGivienX(matrix));
+        System.out.println("I(X,Y): " + calculateMutualInformation(matrix));
+        System.out.println("D(Px || Py): " + calculateD_PX_PY(matrix));
+        System.out.println("D(Py || Px): " + calculateD_PY_PX(matrix));
     }
-
-
 }
