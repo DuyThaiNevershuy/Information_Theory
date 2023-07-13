@@ -1,6 +1,5 @@
 import java.util.Scanner;
-
-public class Ex1 {
+public class InformationTheoryProject_Exercise1 {
     public static double log2(double digit) {
         return Math.log(digit) / Math.log(2);
     }
@@ -83,10 +82,10 @@ public class Ex1 {
         return H_YGivenX;
     }
 
-    public static double calculateY_Given_X2(double[][] matrix) {
-        return calculateHY(matrix) - calculateHX(matrix) + calculateX_Given_Y(matrix);
-        //H(Y|X) = H(Y) - H(X) + H(X|Y)
-    }
+//    public static double calculateY_Given_X2(double[][] matrix) {
+//        return calculateHY(matrix) - calculateHX(matrix) + calculateX_Given_Y(matrix);
+//        //H(Y|X) = H(Y) - H(X) + H(X|Y)
+//    }
 
     public static double calculateJointEntroPy(double[][] matrix) {
         int rows = matrix.length;
@@ -150,45 +149,35 @@ public class Ex1 {
 
 
     public static void main(String[] args) {
-//        double[][] matrix = {
-//                {0.0625, 0.375, 0.0625},
-//                {0.0625, 0.1875, 0},
-//                {0, 0.1875, 0.0625}
-//        };
-        double[][] matrix = {
-                {0.3, 0.2},
-                {0.4, 0.1}
-        };
+        Scanner scanner = new Scanner(System.in);
 
-//        Scanner scanner = new Scanner(System.in);
-//
-//        // Nhập kích thước ma trận
-//        System.out.print("Nhập số hàng M: ");
-//        int M = scanner.nextInt();
-//        System.out.print("Nhập số cột N: ");
-//        int N = scanner.nextInt();
-//        // Tạo ma trận xác suất
-//        double[][] matrix = new double[M][N];
-//        // Nhập ma trận xác suất từ bàn phím
-//
-//        for (int i = 0; i < M; i++) {
-//            for (int j = 0; j < N; j++) {
-//                System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
-//                double probability = scanner.nextDouble();
-//                while (probability < 0) {
-//                    System.out.println("Xác suất không thể âm. Mời nhập lại!");
-//                    System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
-//                    probability = scanner.nextDouble();
-//                }
-//                matrix[i][j] = probability;
-//            }
-//        }
+        // Nhập kích thước ma trận
+        System.out.print("Nhập số hàng M: ");
+        int M = scanner.nextInt();
+        System.out.print("Nhập số cột N: ");
+        int N = scanner.nextInt();
+        // Tạo ma trận xác suất
+        double[][] matrix = new double[M][N];
+        // Nhập ma trận xác suất từ bàn phím
+
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
+                double probability = scanner.nextDouble();
+                while (probability < 0) {
+                    System.out.println("Xác suất không thể âm. Mời nhập lại!");
+                    System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
+                    probability = scanner.nextDouble();
+                }
+                matrix[i][j] = probability;
+            }
+        }
 //
         System.out.println("H(X): " + calculateHX(matrix));
         System.out.println("H(Y): " + calculateHY(matrix));
         System.out.println("H(X|Y): " + calculateX_Given_Y(matrix));
         System.out.println("H(Y|X): " + calculateY_Given_X(matrix));
-        System.out.println("H(Y|X) another: " + calculateY_Given_X2(matrix));
+//        System.out.println("H(Y|X) another: " + calculateY_Given_X2(matrix));
         System.out.println("H(X,Y): " + calculateJointEntroPy(matrix));
         System.out.println("H(Y) - H(Y|X): " + calculateHY_Minus_HYGivienX(matrix));
         System.out.println("I(X,Y): " + calculateMutualInformation(matrix));
