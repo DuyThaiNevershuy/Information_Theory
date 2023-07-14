@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class InformationTheoryProject_Exercise1 {
     public static double log2(double digit) {
         return Math.log(digit) / Math.log(2);
@@ -71,7 +72,8 @@ public class InformationTheoryProject_Exercise1 {
             double ProbabilityOfYGivenX;
             for (int i = 0; i < rows; i++) {
                 if (matrix[i][j] > 0) {
-                    ProbabilityOfYGivenX = matrix[i][j] / colSum; //P(Y|X) = P(X,Y) / P(X) (PX = colSum), P(X,Y) xét theo cột xuống px1y1 xuống px1y2
+                    ProbabilityOfYGivenX = matrix[i][j] / colSum;
+                    //P(Y|X) = P(X,Y) / P(X) (PX = colSum), P(X,Y) xét theo cột xuống px1y1 xuống px1y2
                     temp -= (ProbabilityOfYGivenX) * log2(ProbabilityOfYGivenX);
                     //Cả biểu thức này bằng: temp = P(Y|X) * log2(P_(Y|X))
                     //Suy ra để tính H(Y|X) cần nhân thêm P(X) = colSum
@@ -82,10 +84,10 @@ public class InformationTheoryProject_Exercise1 {
         return H_YGivenX;
     }
 
-//    public static double calculateY_Given_X2(double[][] matrix) {
-//        return calculateHY(matrix) - calculateHX(matrix) + calculateX_Given_Y(matrix);
-//        //H(Y|X) = H(Y) - H(X) + H(X|Y)
-//    }
+    public static double calculateY_Given_X2(double[][] matrix) {
+        return calculateHY(matrix) - calculateHX(matrix) + calculateX_Given_Y(matrix);
+        //H(Y|X) = H(Y) - H(X) + H(X|Y)
+    }
 
     public static double calculateJointEntroPy(double[][] matrix) {
         int rows = matrix.length;
@@ -107,7 +109,7 @@ public class InformationTheoryProject_Exercise1 {
 
     public static double calculateMutualInformation(double[][] matrix) {
         //I(X,Y) = H(Y) - H(Y|X) = H(X) - H(X|Y)
-//        return calculateHY(matrix) - calculateY_Given_X(matrix); --> 2cách
+//        return calculateHY(matrix) - calculateY_Given_X(matrix);
         return calculateHX(matrix) - calculateX_Given_Y(matrix);
     }
 
@@ -172,15 +174,36 @@ public class InformationTheoryProject_Exercise1 {
                 matrix[i][j] = probability;
             }
         }
-//
+
+        //Vẽ ma trận
+        System.out.println("Ma trận đã nhập:");
+        System.out.printf("p(X,Y)\t  ");
+        for (int i = 0; i < M; i++) {
+            System.out.printf("X%d\t  ", (i + 1));
+        }
+        System.out.println();
+        for (int i = 0; i < M; i++) {
+            System.out.print("  Y" + (i + 1));
+            System.out.print("\t");
+            for (int j = 0; j < N; j++) {
+                System.out.printf("%.4f", matrix[i][j]);
+                System.out.print("\t");
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+        System.out.println("Câu B:");
         System.out.println("H(X): " + calculateHX(matrix));
         System.out.println("H(Y): " + calculateHY(matrix));
         System.out.println("H(X|Y): " + calculateX_Given_Y(matrix));
         System.out.println("H(Y|X): " + calculateY_Given_X(matrix));
-//        System.out.println("H(Y|X) another: " + calculateY_Given_X2(matrix));
+        System.out.println("H(Y|X) solution 2: " + calculateY_Given_X2(matrix));
         System.out.println("H(X,Y): " + calculateJointEntroPy(matrix));
         System.out.println("H(Y) - H(Y|X): " + calculateHY_Minus_HYGivienX(matrix));
         System.out.println("I(X,Y): " + calculateMutualInformation(matrix));
+        System.out.println();
+        System.out.println("Câu C:");
         System.out.println("D(Px || Py): " + calculateD_PX_PY(matrix));
         System.out.println("D(Py || Px): " + calculateD_PY_PX(matrix));
     }

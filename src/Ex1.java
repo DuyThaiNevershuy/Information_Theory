@@ -150,15 +150,15 @@ public class Ex1 {
 
 
     public static void main(String[] args) {
-//        double[][] matrix = {
-//                {0.0625, 0.375, 0.0625},
-//                {0.0625, 0.1875, 0},
-//                {0, 0.1875, 0.0625}
-//        };
         double[][] matrix = {
-                {0.3, 0.2},
-                {0.4, 0.1}
+                {0.0625, 0.375, 0.0625},
+                {0.0625, 0.1875, 0},
+                {0, 0.1875, 0.0625}
         };
+//        double[][] matrix = {
+//                {0.3, 0.2},
+//                {0.4, 0.1}
+//        };
 
 //        Scanner scanner = new Scanner(System.in);
 //
