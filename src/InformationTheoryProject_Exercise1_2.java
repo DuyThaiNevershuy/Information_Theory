@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class  InformationTheoryProject_Exercise1_2{
+public class InformationTheoryProject_Exercise1_2 {
     public static double log2(double digit) {
         return Math.log(digit) / Math.log(2);
     }
@@ -149,7 +149,6 @@ public class  InformationTheoryProject_Exercise1_2{
         return relativeEntropyDYX;
     }
 
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -163,18 +162,18 @@ public class  InformationTheoryProject_Exercise1_2{
         // Nhập ma trận xác suất từ bàn phím
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
-                do{
+                do {
                     System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
                     String inputString = scanner.nextLine();
-                    if(inputString.contains("/")){
+                    if (inputString.contains("/")) {
                         String[] arr = inputString.split("/");
-                        Double tu = Double.parseDouble(arr[0]);
-                        Double mau = Double.parseDouble(arr[1]);
-                        matrix[i][j] = tu/mau;
-                    }else{
+                        Double tuSo = Double.parseDouble(arr[0]);
+                        Double mauSo = Double.parseDouble(arr[1]);
+                        matrix[i][j] = tuSo / mauSo;
+                    } else {
                         matrix[i][j] = Double.parseDouble(inputString);
                     }
-                }while(matrix[i][j] < 0);
+                } while (matrix[i][j] < 0);
             }
         }
 
