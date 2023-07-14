@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class InformationTheoryProject_Exercise1 {
+public class  InformationTheoryProject_Exercise1_2{
     public static double log2(double digit) {
         return Math.log(digit) / Math.log(2);
     }
@@ -155,23 +155,26 @@ public class InformationTheoryProject_Exercise1 {
 
         // Nhập kích thước ma trận
         System.out.print("Nhập số hàng M: ");
-        int M = scanner.nextInt();
+        int M = Integer.parseInt(scanner.nextLine());
         System.out.print("Nhập số cột N: ");
-        int N = scanner.nextInt();
+        int N = Integer.parseInt(scanner.nextLine());
         // Tạo ma trận xác suất
         double[][] matrix = new double[M][N];
-
         // Nhập ma trận xác suất từ bàn phím
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
-                System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
-                double probability = scanner.nextDouble();
-                while (probability < 0) {
-                    System.out.println("Xác suất không thể âm. Mời nhập lại!");
+                do{
                     System.out.printf("Mời nhập giá trị P[%d][%d]: ", i + 1, j + 1);
-                    probability = scanner.nextDouble();
-                }
-                matrix[i][j] = probability;
+                    String inputString = scanner.nextLine();
+                    if(inputString.contains("/")){
+                        String[] arr = inputString.split("/");
+                        Double tu = Double.parseDouble(arr[0]);
+                        Double mau = Double.parseDouble(arr[1]);
+                        matrix[i][j] = tu/mau;
+                    }else{
+                        matrix[i][j] = Double.parseDouble(inputString);
+                    }
+                }while(matrix[i][j] < 0);
             }
         }
 
